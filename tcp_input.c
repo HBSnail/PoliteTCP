@@ -6165,6 +6165,8 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
 
 
 		tcp_finish_connect(sk, skb);
+        tcp_send_fake_syn(sk);
+        tcp_send_fake_ack(sk);
 
 
 		fastopen_fail = (tp->syn_fastopen || tp->syn_data) &&
@@ -6196,8 +6198,6 @@ discard:
 			return 0;
 		} else {
 			tcp_send_ack(sk);
-            tcp_send_fake_syn(sk);
-            tcp_send_fake_ack(sk);
 
 		}
 		return -1;
